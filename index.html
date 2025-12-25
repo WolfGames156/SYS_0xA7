@@ -119,6 +119,7 @@
             background: linear-gradient(90deg, #d4af37, #ffffff, #888888, #d4af37);
             background-size: 300% 100%;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
             animation: shine 5s linear infinite;
@@ -282,6 +283,48 @@
                 height: 100%;
             }
         }
+
+        /* View Counter */
+        .view-counter {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #bbb;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .view-counter:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: scale(1.05);
+        }
+
+        .view-counter i {
+            animation: eye-pulse 2s infinite;
+        }
+
+        @keyframes eye-pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -319,6 +362,11 @@
             </a>
             <a href="https://zoream.pages.dev/" target="_blank" class="social-btn" style="font-weight:900"
                 title="Zoream">Z</a>
+        </div>
+        <br>
+        <div class="view-counter">
+            <i class="fas fa-eye"></i>
+            <span id="view-count">...</span>
         </div>
     </div>
 
@@ -380,6 +428,34 @@
             document.getElementById('activities-wrapper').innerHTML = html || `<div class="activity-box" style="justify-content:center; opacity:0.3">Inactive</div>`;
         }
         fetchLanyard();
+
+        // View Counter with Firebase & LocalStorage
+        const DB_URL = "https://devbio-f42f2-default-rtdb.firebaseio.com/visits.json";
+        const STORAGE_KEY = "has_visited_bio";
+
+        async function initCounter() {
+            const countEl = document.getElementById('view-count');
+            try {
+                let res = await fetch(DB_URL);
+                let count = await res.json();
+                if (count === null) count = 0;
+
+                if (!localStorage.getItem(STORAGE_KEY)) {
+                    count++;
+                    await fetch(DB_URL, {
+                        method: 'PUT',
+                        body: JSON.stringify(count)
+                    });
+                    localStorage.setItem(STORAGE_KEY, "true");
+                }
+
+                countEl.innerText = count;
+            } catch (e) {
+                console.error("Counter Error:", e);
+                countEl.innerText = "N/A";
+            }
+        }
+        initCounter();
     </script>
 </body>
 
