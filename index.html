@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio | Profile</title>
+    <title>SYS_0xA7</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- Temel Ayarlar --- */
+        /* --- CORE --- */
         * {
             margin: 0;
             padding: 0;
@@ -18,57 +19,52 @@
 
         body {
             background-color: #050505;
-            /* Keksi tarzı noktalı arka plan */
-            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-image: radial-gradient(#222 1px, transparent 1px);
             background-size: 25px 25px;
             color: #fff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* --- Kar Efekti Canvas --- */
         #snow-canvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Tıklamayı engellemez */
+            pointer-events: none;
             z-index: 1;
         }
 
-        /* --- Ana Kart Tasarımı (Glassmorphism) --- */
+        /* --- CARD DESIGN --- */
         .card {
-            background: rgba(20, 20, 20, 0.6);
-            width: 400px;
+            background: rgba(10, 10, 10, 0.8);
+            width: 440px;
             max-width: 90%;
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            padding: 2.5rem;
+            border-radius: 32px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
             text-align: center;
             position: relative;
             z-index: 10;
-            animation: fadeIn 1s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 20px auto;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Profil Resmi ve Durum --- */
-        .profile-container {
+        /* --- PROFILE AREA --- */
+        .profile-wrapper {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 15px auto;
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 20px auto;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .profile-img {
@@ -77,70 +73,120 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
         }
 
-        .profile-img:hover {
-            transform: scale(1.05);
-            border-color: #7289da;
+        .profile-wrapper:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .profile-wrapper:hover .profile-img {
+            border-color: #d4af37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
         }
 
         .status-indicator {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 25px;
-            height: 25px;
+            bottom: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            border: 3px solid #1a1a1a;
-            background-color: #747f8d; /* Default Offline */
+            border: 4px solid #0a0a0a;
+            background-color: #747f8d;
+            z-index: 2;
         }
 
-        /* Durum Renkleri */
-        .status-online { background-color: #3ba55c; box-shadow: 0 0 10px #3ba55c; }
-        .status-idle { background-color: #faa61a; box-shadow: 0 0 10px #faa61a; }
-        .status-dnd { background-color: #ed4245; box-shadow: 0 0 10px #ed4245; }
-        .status-offline { background-color: #747f8d; }
+        .status-online {
+            background-color: #3ba55c;
+            box-shadow: 0 0 12px #3ba55c;
+        }
 
-        /* --- Metinler --- */
+        .status-idle {
+            background-color: #faa61a;
+            box-shadow: 0 0 12px #faa61a;
+        }
+
+        .status-dnd {
+            background-color: #ed4245;
+            box-shadow: 0 0 12px #ed4245;
+        }
+
+        /* --- TEXTS --- */
         h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            background: linear-gradient(90deg, #fff, #aaa);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #d4af37, #ffffff, #888888, #d4af37);
+            background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        .custom-status {
+            font-style: italic;
+            color: #bbb;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            min-height: 20px;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            color: #ccc;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            padding: 6px 16px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: default;
         }
 
-        /* --- Aktivite Kutusu (Spotify / Oyun) --- */
+        .badge:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- ACTIVITIES --- */
+        .activities-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         .activity-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            padding: 16px;
             display: flex;
             align-items: center;
             gap: 15px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
-            min-height: 80px;
         }
 
-        .activity-box img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
+        .activity-box:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            transform: scale(1.02);
+        }
+
+        .activity-img {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
             object-fit: cover;
         }
 
@@ -151,291 +197,190 @@
         }
 
         .activity-header {
-            font-size: 0.75rem;
-            color: #bbb;
+            font-size: 0.65rem;
+            color: #d4af37;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
+            font-weight: 800;
         }
 
         .activity-name {
             font-size: 0.95rem;
             font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             color: #fff;
         }
 
         .activity-details {
             font-size: 0.8rem;
-            color: #888;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: #999;
         }
 
-        /* --- Sosyal Linkler --- */
+        /* --- FIXED BOTTOM CARD (SABİT HOVER GÖRÜNÜMÜ) --- */
         .social-links {
-            margin-top: 25px;
+            margin-top: 30px;
             display: flex;
             justify-content: center;
             gap: 15px;
+            background: rgba(212, 175, 55, 0.06);
+            /* Sabit hafif altın rengi */
+            padding: 18px;
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            /* Sabit parlak kenar */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .social-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .social-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #d4af37;
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
 
-        /* Spotify Bar Animasyonu */
+        .social-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Spotify Bar */
         .bars {
             display: flex;
             align-items: flex-end;
-            height: 15px;
+            height: 14px;
             gap: 2px;
             margin-left: auto;
         }
+
         .bar {
             width: 3px;
             background-color: #1db954;
             animation: bounce 1s infinite ease-in-out;
         }
-        .bar:nth-child(2) { animation-delay: 0.1s; height: 60%; }
-        .bar:nth-child(3) { animation-delay: 0.2s; height: 80%; }
-        @keyframes bounce {
-            0%, 100% { height: 20%; }
-            50% { height: 100%; }
-        }
 
+        @keyframes bounce {
+
+            0%,
+            100% {
+                height: 20%;
+            }
+
+            50% {
+                height: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <canvas id="snow-canvas"></canvas>
 
     <div class="card">
-        <div class="profile-container">
+        <div class="profile-wrapper">
             <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile" class="profile-img" id="avatar">
-            <div class="status-indicator status-offline" id="status-dot"></div>
+            <div class="status-indicator" id="status-dot"></div>
         </div>
 
-        <h1 id="username">Yükleniyor...</h1>
-        <div class="badge">Programmer / Developer</div>
+        <h1 id="username">SYS_0xA7</h1>
+        <div id="custom-status" class="custom-status"></div>
 
-        <div class="activity-box" id="activity-container">
-            <div style="font-size: 2rem; width: 60px; text-align: center;">💤</div>
-            <div class="activity-info">
-                <div class="activity-header">DURUM</div>
-                <div class="activity-name">Şu an aktif değil</div>
-                <div class="activity-details">Bir şeyler geliştiriyor olabilir...</div>
-            </div>
+        <div class="badge">DEVELOPER</div>
+
+        <div class="activities-wrapper" id="activities-wrapper">
         </div>
 
         <div class="social-links">
-            <a href="https://github.com" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
-            <a href="https://discord.com" target="_blank" class="social-btn"><i class="fab fa-discord"></i></a>
-            <a href="https://twitter.com" target="_blank" class="social-btn"><i class="fab fa-twitter"></i></a>
-            <a href="mailto:email@example.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/WolfGames156" target="_blank" class="social-btn" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://discord.gg/teJfDPKwZP" target="_blank" class="social-btn" title="Discord">
+                <i class="fab fa-discord"></i>
+            </a>
+            <a href="https://www.patreon.com/cw/SYS_0xA7" target="_blank" class="social-btn" title="Patreon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M22.957 7.21c-.004-3.064-2.391-5.576-5.191-6.482c-3.478-1.125-8.064-.962-11.384.604C2.357 3.231 1.093 7.391 1.046 11.54c-.039 3.411.302 12.396 5.369 12.46c3.765.047 4.326-4.804 6.068-7.141c1.24-1.662 2.836-2.132 4.801-2.618c3.376-.836 5.678-3.501 5.673-7.031">
+                    </path>
+                </svg>
+            </a>
+            <a href="https://zoream.pages.dev/" target="_blank" class="social-btn" style="font-weight:900"
+                title="Zoream">Z</a>
         </div>
     </div>
 
     <script>
-        // --- 1. KAR EFEKTİ SCRİPTİ ---
+        // Snow and Lanyard scripts are identical to previous version
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const snowflakes = [];
-        const numFlakes = 100; // Kar tanesi sayısı
-
-        class Snowflake {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speed = Math.random() * 1 + 0.5;
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-            update() {
-                this.y += this.speed;
-                if (this.y > canvas.height) {
-                    this.y = 0;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < numFlakes; i++) {
-            snowflakes.push(new Snowflake());
-        }
-
-        function animateSnow() {
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.onresize = resize; resize();
+        const flakes = Array.from({ length: 70 }).map(() => ({
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+            s: Math.random() * 2 + 1, sp: Math.random() * 0.7 + 0.3
+        }));
+        function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            snowflakes.forEach(flake => {
-                flake.update();
-                flake.draw();
+            ctx.fillStyle = "rgba(255,255,255,0.2)";
+            flakes.forEach(f => {
+                f.y += f.sp; if (f.y > canvas.height) f.y = -5;
+                ctx.beginPath(); ctx.arc(f.x, f.y, f.s, 0, Math.PI * 2); ctx.fill();
             });
-            requestAnimationFrame(animateSnow);
+            requestAnimationFrame(draw);
         }
-        animateSnow();
+        draw();
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // --- 2. LANYARD (DISCORD RPC) SCRİPTİ ---
-        const DISCORD_ID = "1239262498239287427"; // Senin ID'n
-        const avatarImg = document.getElementById('avatar');
-        const statusDot = document.getElementById('status-dot');
-        const usernameText = document.getElementById('username');
-        const activityContainer = document.getElementById('activity-container');
-
-        // Varsayılan Emoji (Resim bulunamazsa)
-        const DEFAULT_EMOJI = "👻"; 
-
-        async function connectLanyard() {
+        const DISCORD_ID = "1239262498239287427";
+        async function fetchLanyard() {
             const ws = new WebSocket('wss://api.lanyard.rest/socket');
-
-            ws.onopen = () => {
-                // Lanyard'a abone oluyoruz
-                ws.send(JSON.stringify({
-                    op: 2,
-                    d: { subscribe_to_id: DISCORD_ID }
-                }));
-            };
-
-            ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                const { t, d } = data;
-
-                if (t === 'INIT_STATE' || t === 'PRESENCE_UPDATE') {
-                    updateProfile(d);
-                }
-            };
-
-            ws.onclose = () => {
-                // Bağlantı koparsa 5 saniye sonra tekrar dene
-                setTimeout(connectLanyard, 5000);
+            ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }));
+            ws.onmessage = (e) => {
+                const { t, d } = JSON.parse(e.data);
+                if (t === 'INIT_STATE' || t === 'PRESENCE_UPDATE') update(d);
             };
         }
 
-        function updateProfile(data) {
-            // 1. Profil Bilgileri
+        function update(data) {
             const user = data.discord_user;
-            usernameText.innerText = user.display_name || user.username;
-            
-            // Avatar Linki Oluşturma
-            if (user.avatar) {
-                const isGif = user.avatar.startsWith("a_");
-                avatarImg.src = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${user.avatar}.${isGif ? "gif" : "png"}?size=512`;
+            document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=512`;
+            document.getElementById('status-dot').className = 'status-indicator status-' + data.discord_status;
+
+            // Custom Status (Type 4)
+            const customStatus = data.activities.find(a => a.type === 4);
+            if (customStatus && customStatus.state) {
+                let statusHtml = customStatus.emoji ? `${customStatus.emoji.id ? `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png?v=1" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;">` : customStatus.emoji.name + ' '}` : '';
+                statusHtml += customStatus.state;
+                document.getElementById('custom-status').innerHTML = statusHtml;
             } else {
-                avatarImg.src = "https://cdn.discordapp.com/embed/avatars/0.png";
+                document.getElementById('custom-status').innerHTML = '';
             }
 
-            // 2. Durum (Online, Idle, DND)
-            statusDot.className = 'status-indicator'; // Reset
-            switch (data.discord_status) {
-                case 'online': statusDot.classList.add('status-online'); break;
-                case 'idle': statusDot.classList.add('status-idle'); break;
-                case 'dnd': statusDot.classList.add('status-dnd'); break;
-                default: statusDot.classList.add('status-offline'); break;
-            }
-
-            // 3. Aktivite / Spotify Kontrolü
-            
-            // Öncelik 1: Spotify
-            if (data.listening_to_spotify && data.spotify) {
+            let html = "";
+            if (data.listening_to_spotify) {
                 const s = data.spotify;
-                const art = s.album_art_url || "";
-                
-                activityContainer.innerHTML = `
-                    <img src="${art}" alt="Album Art" onerror="this.style.display='none'">
-                    <div class="activity-info">
-                        <div class="activity-header" style="color:#1db954;">SPOTIFY ÇALIYOR</div>
-                        <div class="activity-name">${s.song}</div>
-                        <div class="activity-details">${s.artist}</div>
-                    </div>
-                    <div class="bars">
-                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                    </div>
-                `;
-            } 
-            // Öncelik 2: Oyun / VS Code vb.
-            else if (data.activities && data.activities.length > 0) {
-                // Custom Status olmayan ilk aktiviteyi bul
-                const activity = data.activities.find(a => a.type !== 4);
-                
-                if (activity) {
-                    let imageKey = activity.assets ? activity.assets.large_image : null;
-                    let imageUrl = "";
-
-                    // Discord resim linkini çözme
-                    if (imageKey) {
-                        if (imageKey.startsWith("mp:external/")) {
-                            imageUrl = imageKey.replace(/mp:external\/([^\/]*)\/(https?)\/(.*)/, '$2://$3');
-                        } else {
-                            imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${imageKey}.png`;
-                        }
-                    }
-
-                    activityContainer.innerHTML = `
-                        ${imageUrl ? `<img src="${imageUrl}" alt="Game Art">` : `<div style="font-size:2rem;">🎮</div>`}
-                        <div class="activity-info">
-                            <div class="activity-header">AKTİVİTE</div>
-                            <div class="activity-name">${activity.name}</div>
-                            <div class="activity-details">${activity.details || activity.state || ""}</div>
-                        </div>
-                    `;
-                } else {
-                    setOfflineState();
-                }
-            } 
-            // Hiçbir şey yoksa
-            else {
-                setOfflineState();
+                html += `<div class="activity-box"><img src="${s.album_art_url}" class="activity-img"><div class="activity-info"><div class="activity-header">Listening to Spotify</div><div class="activity-name">${s.song}</div><div class="activity-details">${s.artist}</div></div><div class="bars"><div class="bar"></div><div class="bar" style="animation-delay:.1s"></div><div class="bar" style="animation-delay:.2s"></div></div></div>`;
             }
+            data.activities.filter(a => a.type !== 4 && a.id !== 'spotify:1').forEach(act => {
+                let img = act.assets ? (act.assets.large_image.startsWith("mp:external") ? act.assets.large_image.replace(/mp:external\/.*\/https\/(.*)/, 'https://$1') : `https://cdn.discordapp.com/app-assets/${act.application_id}/${act.assets.large_image}.png`) : "https://cdn.discordapp.com/embed/avatars/0.png";
+                html += `<div class="activity-box"><img src="${img}" class="activity-img"><div class="activity-info"><div class="activity-header">Playing Now</div><div class="activity-name">${act.name}</div><div class="activity-details">${act.state || ''}</div></div></div>`;
+            });
+            document.getElementById('activities-wrapper').innerHTML = html || `<div class="activity-box" style="justify-content:center; opacity:0.3">Inactive</div>`;
         }
-
-        function setOfflineState() {
-            activityContainer.innerHTML = `
-                <div style="font-size: 2rem; width: 60px; text-align: center;">${DEFAULT_EMOJI}</div>
-                <div class="activity-info">
-                    <div class="activity-header">DURUM</div>
-                    <div class="activity-name">Boşta</div>
-                    <div class="activity-details">Şu an bir aktivite yok.</div>
-                </div>
-            `;
-        }
-
-        // Başlat
-        connectLanyard();
-
+        fetchLanyard();
     </script>
 </body>
+
 </html>
