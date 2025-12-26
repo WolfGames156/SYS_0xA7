@@ -178,6 +178,7 @@
             min-height: 20px;
         }
 
+        /* GOLD BADGE (Main Title) */
         .badge {
             display: inline-block;
             background: rgba(212, 175, 55, 0.1);
@@ -186,7 +187,7 @@
             border-radius: 10px;
             font-size: 0.75rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 15px; /* Altındaki gümüş etiketlere yer açmak için */
             border: 1px solid rgba(212, 175, 55, 0.2);
             letter-spacing: 1px;
             transition: all 0.3s ease;
@@ -197,6 +198,37 @@
             background: rgba(212, 175, 55, 0.2);
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             transform: translateY(-2px);
+        }
+
+        /* --- SILVER SKILL BADGES --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            background: rgba(192, 192, 192, 0.08); /* Silver Transparent */
+            color: #C0C0C0; /* Silver Text */
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(192, 192, 192, 0.15);
+            box-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
+            border-color: #C0C0C0;
+            transform: translateY(-2px);
+            color: #fff;
         }
 
         /* --- ACTIVITIES --- */
@@ -254,18 +286,16 @@
             color: #999;
         }
 
-        /* --- FIXED BOTTOM CARD (SABİT HOVER GÖRÜNÜMÜ) --- */
+        /* --- FIXED BOTTOM CARD --- */
         .social-links {
             margin-top: 30px;
             display: flex;
             justify-content: center;
             gap: 15px;
             background: rgba(212, 175, 55, 0.06);
-            /* Sabit hafif altın rengi */
             padding: 18px;
             border-radius: 24px;
             border: 1px solid rgba(212, 175, 55, 0.25);
-            /* Sabit parlak kenar */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
@@ -384,6 +414,17 @@
         <div id="custom-status" class="custom-status"></div>
 
         <div class="badge">DEVELOPER</div>
+
+        <div class="skills-container">
+            <span class="skill-badge">HTML</span>
+            <span class="skill-badge">CSS</span>
+            <span class="skill-badge">REACT</span>
+            <span class="skill-badge">JAVASCRIPT</span>
+            <span class="skill-badge">NODE.JS</span>
+            <span class="skill-badge">PYTHON</span>
+            <span class="skill-badge">C++</span>
+            <span class="skill-badge">C#</span>
+        </div>
 
         <div class="activities-wrapper" id="activities-wrapper">
         </div>
@@ -533,7 +574,7 @@
         animateCursor();
 
         // Hover Effect
-        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box');
+        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box, .skill-badge');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
