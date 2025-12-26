@@ -15,6 +15,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            cursor: none !important;
         }
 
         body {
@@ -28,6 +29,44 @@
             justify-content: center;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            position: fixed;
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: fixed;
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border 0.3s, background-color 0.3s;
+        }
+
+        .cursor-hover .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background-color: #d4af37;
+        }
+
+        .cursor-hover .cursor-outline {
+            width: 50px;
+            height: 50px;
+            border-color: rgba(212, 175, 55, 0.5);
+            background-color: rgba(212, 175, 55, 0.1);
         }
 
         #snow-canvas {
@@ -332,6 +371,9 @@
 
     <canvas id="snow-canvas"></canvas>
 
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <div class="card">
         <div class="profile-wrapper">
             <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile" class="profile-img" id="avatar">
@@ -456,6 +498,46 @@
             }
         }
         initCounter();
+
+        // Custom Cursor Logic
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let dotX = 0;
+        let dotY = 0;
+        let outlineX = 0;
+        let outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Smooth easing for the dot (less delay)
+            dotX += (mouseX - dotX) * 0.2;
+            dotY += (mouseY - dotY) * 0.2;
+            dot.style.left = dotX + 'px';
+            dot.style.top = dotY + 'px';
+
+            // More delay for the outline (the "delayed" effect)
+            outlineX += (mouseX - outlineX) * 0.1;
+            outlineY += (mouseY - outlineY) * 0.1;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover Effect
+        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
     </script>
 </body>
 
