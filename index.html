@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYS_0xA7</title>
+    <link rel="icon" type="image/png" href="sys_logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CORE --- */
+        /* ... (CSS kodları aynı kalıyor) ... */
         * {
             margin: 0;
             padding: 0;
@@ -31,7 +32,6 @@
             position: relative;
         }
 
-        /* --- CUSTOM CURSOR --- */
         .cursor-dot {
             width: 6px;
             height: 6px;
@@ -79,7 +79,6 @@
             z-index: 1;
         }
 
-        /* --- CARD DESIGN --- */
         .card {
             background: rgba(10, 10, 10, 0.8);
             width: 440px;
@@ -97,7 +96,6 @@
             margin: 20px auto;
         }
 
-        /* --- PROFILE AREA --- */
         .profile-wrapper {
             position: relative;
             width: 125px;
@@ -136,22 +134,10 @@
             z-index: 2;
         }
 
-        .status-online {
-            background-color: #3ba55c;
-            box-shadow: 0 0 12px #3ba55c;
-        }
+        .status-online { background-color: #3ba55c; box-shadow: 0 0 12px #3ba55c; }
+        .status-idle { background-color: #faa61a; box-shadow: 0 0 12px #faa61a; }
+        .status-dnd { background-color: #ed4245; box-shadow: 0 0 12px #ed4245; }
 
-        .status-idle {
-            background-color: #faa61a;
-            box-shadow: 0 0 12px #faa61a;
-        }
-
-        .status-dnd {
-            background-color: #ed4245;
-            box-shadow: 0 0 12px #ed4245;
-        }
-
-        /* --- TEXTS --- */
         h1 {
             font-size: 2rem;
             font-weight: 700;
@@ -164,11 +150,7 @@
             animation: shine 5s linear infinite;
         }
 
-        @keyframes shine {
-            to {
-                background-position: 300% center;
-            }
-        }
+        @keyframes shine { to { background-position: 300% center; } }
 
         .custom-status {
             font-style: italic;
@@ -178,7 +160,6 @@
             min-height: 20px;
         }
 
-        /* GOLD BADGE (Main Title) */
         .badge {
             display: inline-block;
             background: rgba(212, 175, 55, 0.1);
@@ -187,20 +168,13 @@
             border-radius: 10px;
             font-size: 0.75rem;
             font-weight: 700;
-            margin-bottom: 15px; /* Altındaki gümüş etiketlere yer açmak için */
+            margin-bottom: 15px;
             border: 1px solid rgba(212, 175, 55, 0.2);
             letter-spacing: 1px;
             transition: all 0.3s ease;
             cursor: default;
         }
 
-        .badge:hover {
-            background: rgba(212, 175, 55, 0.2);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* --- SILVER SKILL BADGES --- */
         .skills-container {
             display: flex;
             flex-wrap: wrap;
@@ -212,8 +186,8 @@
 
         .skill-badge {
             display: inline-block;
-            background: rgba(192, 192, 192, 0.08); /* Silver Transparent */
-            color: #C0C0C0; /* Silver Text */
+            background: rgba(192, 192, 192, 0.08);
+            color: #C0C0C0;
             padding: 5px 12px;
             border-radius: 8px;
             font-size: 0.7rem;
@@ -223,15 +197,6 @@
             transition: all 0.3s ease;
         }
 
-        .skill-badge:hover {
-            background: rgba(192, 192, 192, 0.15);
-            box-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
-            border-color: #C0C0C0;
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
-        /* --- ACTIVITIES --- */
         .activities-wrapper {
             display: flex;
             flex-direction: column;
@@ -247,12 +212,6 @@
             gap: 15px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
-        }
-
-        .activity-box:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            background: rgba(255, 255, 255, 0.06);
-            transform: scale(1.02);
         }
 
         .activity-img {
@@ -286,7 +245,6 @@
             color: #999;
         }
 
-        /* --- FIXED BOTTOM CARD --- */
         .social-links {
             margin-top: 30px;
             display: flex;
@@ -321,39 +279,10 @@
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
 
-        .social-btn svg {
-            width: 22px;
-            height: 22px;
-        }
+        .bars { display: flex; align-items: flex-end; height: 14px; gap: 2px; margin-left: auto; }
+        .bar { width: 3px; background-color: #1db954; animation: bounce 1s infinite ease-in-out; }
+        @keyframes bounce { 0%, 100% { height: 20%; } 50% { height: 100%; } }
 
-        /* Spotify Bar */
-        .bars {
-            display: flex;
-            align-items: flex-end;
-            height: 14px;
-            gap: 2px;
-            margin-left: auto;
-        }
-
-        .bar {
-            width: 3px;
-            background-color: #1db954;
-            animation: bounce 1s infinite ease-in-out;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                height: 20%;
-            }
-
-            50% {
-                height: 100%;
-            }
-        }
-
-        /* View Counter */
         .view-counter {
             position: absolute;
             bottom: 15px;
@@ -369,44 +298,17 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-
-        .view-counter:hover {
-            background: rgba(212, 175, 55, 0.1);
-            color: #d4af37;
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: scale(1.05);
-        }
-
-        .view-counter i {
-            animation: eye-pulse 2s infinite;
-        }
-
-        @keyframes eye-pulse {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
 <body>
-
     <canvas id="snow-canvas"></canvas>
-
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
     <div class="card">
         <div class="profile-wrapper">
-            <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile" class="profile-img" id="avatar">
+            <img src="https://img.discordapp.com/users/1239262498239287427/avatars/1239262498239287427.png?size=512" alt="Profile" class="profile-img" id="avatar">
             <div class="status-indicator" id="status-dot"></div>
         </div>
 
@@ -426,25 +328,15 @@
             <span class="skill-badge">C#</span>
         </div>
 
-        <div class="activities-wrapper" id="activities-wrapper">
-        </div>
+        <div class="activities-wrapper" id="activities-wrapper"></div>
 
         <div class="social-links">
-            <a href="https://github.com/WolfGames156" target="_blank" class="social-btn" title="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://discord.gg/teJfDPKwZP" target="_blank" class="social-btn" title="Discord">
-                <i class="fab fa-discord"></i>
-            </a>
+            <a href="https://github.com/WolfGames156" target="_blank" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://discord.gg/teJfDPKwZP" target="_blank" class="social-btn" title="Discord"><i class="fab fa-discord"></i></a>
             <a href="https://www.patreon.com/cw/SYS_0xA7" target="_blank" class="social-btn" title="Patreon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M22.957 7.21c-.004-3.064-2.391-5.576-5.191-6.482c-3.478-1.125-8.064-.962-11.384.604C2.357 3.231 1.093 7.391 1.046 11.54c-.039 3.411.302 12.396 5.369 12.46c3.765.047 4.326-4.804 6.068-7.141c1.24-1.662 2.836-2.132 4.801-2.618c3.376-.836 5.678-3.501 5.673-7.031">
-                    </path>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M22.957 7.21c-.004-3.064-2.391-5.576-5.191-6.482c-3.478-1.125-8.064-.962-11.384.604C2.357 3.231 1.093 7.391 1.046 11.54c-.039 3.411.302 12.396 5.369 12.46c3.765.047 4.326-4.804 6.068-7.141c1.24-1.662 2.836-2.132 4.801-2.618c3.376-.836 5.678-3.501 5.673-7.031"></path></svg>
             </a>
-            <a href="https://zoream.pages.dev/" target="_blank" class="social-btn" style="font-weight:900"
-                title="Zoream">Z</a>
+            <a href="https://zoream.pages.dev/" target="_blank" class="social-btn" style="font-weight:900" title="Zoream">Z</a>
         </div>
         <br>
         <div class="view-counter">
@@ -454,14 +346,16 @@
     </div>
 
     <script>
-        // Snow and Lanyard scripts are identical to previous version
+        const DISCORD_ID = "1239262498239287427";
+
+        // Snow animation
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
         const flakes = Array.from({ length: 70 }).map(() => ({
             x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-            s: Math.random() * 2 + 1, sp: Math.random() * 0.7 + 0.3
+            s: Math.random() * 4 + 2, sp: Math.random() * 0.7 + 0.3
         }));
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -474,7 +368,6 @@
         }
         draw();
 
-        const DISCORD_ID = "1239262498239287427";
         async function fetchLanyard() {
             const ws = new WebSocket('wss://api.lanyard.rest/socket');
             ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }));
@@ -485,11 +378,9 @@
         }
 
         function update(data) {
-            const user = data.discord_user;
-            document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=512`;
+            // Profil resmi güncelleme satırı kaldırıldı (HTML'deki sabit link kullanılacak)
             document.getElementById('status-dot').className = 'status-indicator status-' + data.discord_status;
 
-            // Custom Status (Type 4)
             const customStatus = data.activities.find(a => a.type === 4);
             if (customStatus && customStatus.state) {
                 let statusHtml = customStatus.emoji ? `${customStatus.emoji.id ? `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png?v=1" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;">` : customStatus.emoji.name + ' '}` : '';
@@ -512,7 +403,7 @@
         }
         fetchLanyard();
 
-        // View Counter with Firebase & LocalStorage
+        // Counter and Cursor logic...
         const DB_URL = "https://devbio-f42f2-default-rtdb.firebaseio.com/visits.json";
         const STORAGE_KEY = "has_visited_bio";
 
@@ -520,62 +411,33 @@
             const countEl = document.getElementById('view-count');
             try {
                 let res = await fetch(DB_URL);
-                let count = await res.json();
-                if (count === null) count = 0;
-
+                let count = await res.json() || 0;
                 if (!localStorage.getItem(STORAGE_KEY)) {
                     count++;
-                    await fetch(DB_URL, {
-                        method: 'PUT',
-                        body: JSON.stringify(count)
-                    });
+                    await fetch(DB_URL, { method: 'PUT', body: JSON.stringify(count) });
                     localStorage.setItem(STORAGE_KEY, "true");
                 }
-
                 countEl.innerText = count;
-            } catch (e) {
-                console.error("Counter Error:", e);
-                countEl.innerText = "N/A";
-            }
+            } catch (e) { countEl.innerText = "N/A"; }
         }
         initCounter();
 
-        // Custom Cursor Logic
         const dot = document.querySelector('.cursor-dot');
         const outline = document.querySelector('.cursor-outline');
+        let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
 
-        let mouseX = 0;
-        let mouseY = 0;
-        let dotX = 0;
-        let dotY = 0;
-        let outlineX = 0;
-        let outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
 
         function animateCursor() {
-            // Smooth easing for the dot (less delay)
-            dotX += (mouseX - dotX) * 0.2;
-            dotY += (mouseY - dotY) * 0.2;
-            dot.style.left = dotX + 'px';
-            dot.style.top = dotY + 'px';
-
-            // More delay for the outline (the "delayed" effect)
-            outlineX += (mouseX - outlineX) * 0.1;
-            outlineY += (mouseY - outlineY) * 0.1;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
-
+            dotX += (mouseX - dotX) * 0.2; dotY += (mouseY - dotY) * 0.2;
+            dot.style.left = dotX + 'px'; dot.style.top = dotY + 'px';
+            outlineX += (mouseX - outlineX) * 0.1; outlineY += (mouseY - outlineY) * 0.1;
+            outline.style.left = outlineX + 'px'; outline.style.top = outlineY + 'px';
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
-        // Hover Effect
-        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box, .skill-badge');
-        interactiveElements.forEach(el => {
+        document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box, .skill-badge').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
