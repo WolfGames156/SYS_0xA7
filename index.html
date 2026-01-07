@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +14,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CORE --- */
+        /* --- loader --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505;
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+            cursor: none; /* hide system cursor */
+        }
+
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .click-text {
+             font-size: 1.5rem;
+             font-weight: 700;
+             letter-spacing: 2px;
+             color: #fff;
+             cursor: none !important; /* hide system cursor */
+             text-transform: uppercase;
+             text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+             transition: all 0.5s ease;
+        }
+
+        .click-text:hover {
+             color: #f0e68c;
+             transform: scale(1.02);
+        }
+
+        /* --- core --- */
         * {
             margin: 0;
             padding: 0;
@@ -33,23 +86,33 @@
             background-image: radial-gradient(#222 1px, transparent 1px);
             background-size: 25px 25px;
             color: #fff;
-            min-height: 100vh;
+            height: 100vh; /* Fixed height */
+            width: 100%;
+            overflow: hidden; /* Prevent scroll */
+            position: relative;
+            /* Flex and Perspective moved to .main-wrapper */
+        }
+
+        .main-wrapper {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-            position: relative;
             perspective: 1200px;
+            position: relative;
+            z-index: 5; /* lower than cursor */
         }
 
-        /* --- CUSTOM CURSOR --- */
+        /* --- custom cursor --- */
+
         .cursor-dot {
             width: 6px;
             height: 6px;
             background-color: #fff;
             position: fixed;
             border-radius: 50%;
-            z-index: 10000;
+            z-index: 200001;
             pointer-events: none;
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
@@ -61,7 +124,7 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             position: fixed;
             border-radius: 50%;
-            z-index: 9999;
+            z-index: 200000;
             pointer-events: none;
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, border 0.3s, background-color 0.3s;
@@ -90,9 +153,9 @@
             z-index: 1;
         }
 
-        /* --- CARD DESIGN --- */
+        /* --- card design --- */
         .card {
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.6);
             width: 440px;
             max-width: 90%;
             padding: 2.5rem;
@@ -113,7 +176,7 @@
 
         .card:hover {
             box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
-            background: rgba(12, 12, 12, 0.85);
+            /* background kept constant for transparency */
         }
 
         .card::after {
@@ -130,7 +193,7 @@
             z-index: 20;
         }
 
-        /* --- PROFILE AREA --- */
+        /* --- profile area --- */
         .profile-wrapper {
             position: relative;
             width: 125px;
@@ -208,7 +271,7 @@
             box-shadow: 0 0 12px #ed4245;
         }
 
-        /* --- TEXTS --- */
+        /* --- texts --- */
         h1 {
             display: inline-block;
             font-size: 2rem;
@@ -267,7 +330,7 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             cursor: default;
-            /* Kenar Kalınlığı */
+            /* kenar kalınlığı */
             box-shadow: 0 4px 0 rgba(212, 175, 55, 0.2);
             transform: translateZ(35px);
         }
@@ -279,7 +342,7 @@
             box-shadow: 0 6px 0 rgba(212, 175, 55, 0.3);
         }
 
-        /* --- SILVER SKILL BADGES --- */
+        /* --- silver skill badges --- */
         .skills-container {
             display: flex;
             flex-wrap: wrap;
@@ -301,7 +364,7 @@
             border: 1px solid rgba(192, 192, 192, 0.2);
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            /* Kenar Kalınlığı */
+            /* kenar kalınlığı */
             box-shadow: 0 3px 0 rgba(192, 192, 192, 0.15);
             transform: translateZ(20px);
         }
@@ -314,7 +377,7 @@
             box-shadow: 0 5px 0 rgba(192, 192, 192, 0.2);
         }
 
-        /* --- ACTIVITIES --- */
+        /* --- activities --- */
         .activities-wrapper {
             display: flex;
             flex-direction: column;
@@ -372,7 +435,7 @@
             color: #999;
         }
 
-        /* --- FIXED BOTTOM CARD --- */
+        /* --- fixed bottom card --- */
         .social-links {
             margin-top: 30px;
             display: flex;
@@ -421,7 +484,7 @@
             height: 22px;
         }
 
-        /* Spotify Bar */
+        /* spotify bar */
         .bars {
             display: flex;
             align-items: flex-end;
@@ -448,7 +511,7 @@
             }
         }
 
-        /* View Counter */
+        /* view counter */
         .view-counter {
             position: absolute;
             bottom: 15px;
@@ -487,17 +550,158 @@
                 opacity: 0.5;
             }
         }
+
+        /* --- background video --- */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: blur(8px) brightness(0.6);
+            transform: scale(1.05); /* prevent blur edges */
+        }
+
+        /* --- volume control --- */
+        .volume-control {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(20px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .volume-control:hover {
+            background: rgba(0, 0, 0, 0.6);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(-50%) translateZ(30px);
+        }
+
+        .volume-icon {
+            color: #ccc;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: none !important;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: none !important; 
+            transition: all 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            background: #d4af37;
+            transform: scale(1.2);
+        }
+        .volume-icon:hover {
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* --- mobile responsive --- */
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                background-size: 15px 15px; 
+            }
+
+            .main-wrapper {
+                height: auto;
+                min-height: 100vh;
+                padding: 40px 0;
+                perspective: none; 
+                align-items: flex-start; 
+            }
+
+            .card {
+                width: 85%;
+                margin: 0 auto;
+                transform: none !important; 
+                padding-bottom: 80px; 
+            }
+            .card:hover {
+                 transform: none !important;
+                 box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            }
+            
+            .view-counter {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 15px;
+                width: max-content;
+            }
+
+            .volume-control {
+                bottom: 60px; 
+                width: 80%;
+                justify-content: center;
+            }
+            
+            input[type=range] {
+                width: 100%;
+            }
+
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+            
+            * {
+                cursor: auto !important;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h1 style="font-size: 1.2rem; margin:0; animation: none;">LOADING</h1>
+        </div>
+    </div>
+
+    <video id="bg-video" autoplay loop muted playsinline preload="auto">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
     <canvas id="snow-canvas"></canvas>
 
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <div class="card">
+    <div class="main-wrapper">
+        <div class="card">
         <div class="profile-wrapper">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile"
                 class="profile-img" id="avatar">
@@ -543,16 +747,89 @@
                 title="Zoream">Z</a>
         </div>
         <br>
+        
+        <!-- Volume Control -->
+        <div class="volume-control">
+            <i class="fas fa-volume-mute volume-icon" id="vol-icon"></i>
+            <input type="range" id="vol-slider" min="0" max="1" step="0.01" value="0">
+        </div>
+
         <div class="view-counter">
             <i class="fas fa-eye"></i>
             <span id="view-count">...</span>
+        </div>
         </div>
     </div>
 
     <script>
         const DISCORD_ID = "1239262498239287427";
 
-        // Snow Script (Kar Taneleri Geliştirildi)
+        // --- music & volume logic ---
+        const audio = document.getElementById('bg-music');
+        const slider = document.getElementById('vol-slider');
+        const icon = document.getElementById('vol-icon');
+        const STORAGE_VOL = 'sys_volume';
+        const STORAGE_TIME = 'sys_audio_time';
+
+        // initialize state
+        const savedVol = localStorage.getItem(STORAGE_VOL);
+        const savedTime = localStorage.getItem(STORAGE_TIME);
+        let lastVol = 0.5; // default fallback
+
+        if (savedVol !== null) {
+            audio.volume = parseFloat(savedVol);
+            slider.value = savedVol;
+            if (audio.volume > 0) lastVol = audio.volume;
+        } else {
+            audio.volume = 0;
+            slider.value = 0;
+        }
+        updateIcon(audio.volume);
+
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+
+        // toggle mute logic
+        icon.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                lastVol = audio.volume;
+                audio.volume = 0;
+                slider.value = 0;
+            } else {
+                audio.volume = lastVol;
+                slider.value = lastVol;
+                if (audio.paused) audio.play();
+            }
+            localStorage.setItem(STORAGE_VOL, audio.volume);
+            updateIcon(audio.volume);
+        });
+
+        // event listeners
+        slider.addEventListener('input', (e) => {
+            const vol = parseFloat(e.target.value);
+            audio.volume = vol;
+            if (vol > 0) lastVol = vol;
+            localStorage.setItem(STORAGE_VOL, vol);
+            updateIcon(vol);
+            
+            if (vol > 0 && audio.paused) {
+                audio.play();
+            }
+        });
+
+        // save position periodically
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem(STORAGE_TIME, audio.currentTime);
+            }
+        }, 1000);
+
+        function updateIcon(vol) {
+            icon.className = 'fas volume-icon ' + (vol === 0 ? 'fa-volume-mute' : (vol < 0.5 ? 'fa-volume-down' : 'fa-volume-up'));
+        }
+
+        // snow script
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -574,7 +851,7 @@
         }
         draw();
 
-        // 1. ÖNCELİK: Avatarı hemen yükle
+        // 1. öncelik: avatarı hemen yükle
         async function fetchAvatarDirectly() {
             try {
                 const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
@@ -590,7 +867,7 @@
         }
         fetchAvatarDirectly();
 
-        // 2. SOCKET: Durum güncellemeleri için
+        // 2. socket: durum güncellemeleri için
         async function fetchLanyard() {
             const ws = new WebSocket('wss://api.lanyard.rest/socket');
             ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_ID } }));
@@ -658,7 +935,7 @@
         }
         initCounter();
 
-        // Custom Cursor Logic
+        // custom cursor logic
         const dot = document.querySelector('.cursor-dot');
         const outline = document.querySelector('.cursor-outline');
         let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
@@ -681,14 +958,14 @@
         }
         animateCursor();
 
-        // Hover Effect
-        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box, .skill-badge, .badge, h1');
+        // hover effect
+        const interactiveElements = document.querySelectorAll('a, button, .social-btn, .view-counter, .profile-wrapper, .activity-box, .skill-badge, .badge, h1, input[type=range], .volume-icon');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
-        // 3D Tilt Effect Logic
+        // 3d tilt effect logic
         const card = document.querySelector('.card');
         let cardRotateX = 0, cardRotateY = 0, isMouseOut = false;
 
@@ -696,6 +973,8 @@
         document.addEventListener('mouseenter', () => isMouseOut = false);
 
         function updateCardTilt() {
+            if (window.innerWidth <= 768) return;
+
             const limit = 15;
             let targetX = 0, targetY = 0;
 
@@ -716,11 +995,32 @@
             requestAnimationFrame(updateCardTilt);
         }
         updateCardTilt();
+
+        // click to enter logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const loaderContent = document.querySelector('.loader-content');
+            
+            // initial loading done, show enter text
+            loaderContent.innerHTML = '<h1 class="click-text">CLICK TO ENTER</h1>';
+            loader.style.cursor = 'none'; // hide system cursor here too
+
+            // wait for user interaction
+            loader.addEventListener('click', () => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                
+                // play media
+                const vid = document.getElementById('bg-video');
+                if(vid.paused) vid.play().catch(()=>{});
+
+                // play audio if volume is allowed
+                if (audio.volume > 0) {
+                    audio.play().catch(e => console.log("Audio play error", e));
+                }
+            });
+        });
     </script>
 </body>
 
 </html>
-
-
-
-
