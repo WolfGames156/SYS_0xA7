@@ -153,6 +153,16 @@
             z-index: 1;
         }
 
+        #audio-visualizer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 25vh;
+            pointer-events: none;
+            z-index: 4;
+        }
+
         /* --- card design --- */
         .card {
             background: rgba(10, 10, 10, 0.6);
@@ -672,6 +682,10 @@
             .cursor-dot, .cursor-outline {
                 display: none;
             }
+
+            #audio-visualizer {
+                display: none !important;
+            }
             
             * {
                 cursor: auto !important;
@@ -696,6 +710,7 @@
     </audio>
 
     <canvas id="snow-canvas"></canvas>
+    <canvas id="audio-visualizer"></canvas>
 
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
@@ -999,6 +1014,84 @@
         updateCardTilt();
 
         // click to enter logic
+
+        // --- Audio Visualizer ---
+        let audioContext, analyser, source;
+        const vCanvas = document.getElementById('audio-visualizer');
+        const vCtx = vCanvas.getContext('2d');
+
+        function resizeVisualizer() {
+            vCanvas.width = vCanvas.offsetWidth;
+            vCanvas.height = vCanvas.offsetHeight;
+        }
+        window.addEventListener('resize', resizeVisualizer);
+
+        function initVisualizer() {
+            resizeVisualizer();
+            if(audioContext) return;
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+                analyser = audioContext.createAnalyser();
+                analyser.smoothingTimeConstant = 0.92; // smoother
+
+                source = audioContext.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                analyser.fftSize = 64; // significantly fewer bars for performance
+                visualize();
+            } catch(e) {
+                console.error("Visualizer init failed:", e);
+            }
+        }
+
+        function visualize() {
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            const draw = () => {
+                requestAnimationFrame(draw);
+                
+                if(!analyser) return;
+                analyser.getByteFrequencyData(dataArray);
+
+                vCtx.clearRect(0, 0, vCanvas.width, vCanvas.height);
+
+                // Symmetrical: Edges to Center
+                // We map frequencies 0..N to Outer..Center
+                const halfWidth = vCanvas.width / 2;
+                // utilize only lower half of frequencies for better visual? 
+                // typically high freqs are empty. Let's use roughly 70% of bin count to stretch useful data.
+                const usefulBins = Math.floor(bufferLength * 0.7); 
+                const barWidth = (halfWidth / usefulBins);
+                
+                let barHeight;
+
+                for (let i = 0; i < usefulBins; i++) {
+                    // scale height slightly down if it's too aggressive
+                    barHeight = dataArray[i] * 0.8; 
+
+                    const scaledHeight = (barHeight / 255) * vCanvas.height;
+
+                    const gradient = vCtx.createLinearGradient(0, vCanvas.height - scaledHeight, 0, vCanvas.height);
+                    gradient.addColorStop(0, '#d4af37');
+                    gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+
+                    vCtx.fillStyle = gradient;
+
+                    // Left Side: 0 at x=0
+                    const xLeft = i * barWidth;
+                    // Right Side: 0 at x=width
+                    const xRight = vCanvas.width - ((i + 1) * barWidth);
+
+                    vCtx.fillRect(xLeft, vCanvas.height - scaledHeight, barWidth - 1, scaledHeight);
+                    vCtx.fillRect(xRight, vCanvas.height - scaledHeight, barWidth - 1, scaledHeight);
+                }
+            };
+            draw();
+        }
+
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             const loaderContent = document.querySelector('.loader-content');
@@ -1015,6 +1108,10 @@
                 // play media
                 const vid = document.getElementById('bg-video');
                 if(vid.paused) vid.play().catch(()=>{});
+
+                // init visualizer
+                if (!audioContext) initVisualizer();
+                if (audioContext && audioContext.state === 'suspended') audioContext.resume();
 
                 // play audio if volume is allowed
                 if (audio.volume > 0) {
