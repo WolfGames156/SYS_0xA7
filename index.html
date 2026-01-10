@@ -781,59 +781,58 @@
     <script>
         const DISCORD_ID = "1239262498239287427";
 
-        // --- music & volume logic ---
-        const audio = document.getElementById('bg-music');
-        const slider = document.getElementById('vol-slider');
-        const icon = document.getElementById('vol-icon');
-        const STORAGE_VOL = 'sys_volume';
-        const STORAGE_TIME = 'sys_audio_time';
+// --- music & volume logic ---
+const audio = document.getElementById('bg-music');
+const slider = document.getElementById('vol-slider');
+const icon = document.getElementById('vol-icon');
+const STORAGE_VOL = 'sys_volume';
+// STORAGE_TIME kaldırıldı çünkü artık kaydetmeyeceğiz.
 
-        // initialize state
-        const savedVol = localStorage.getItem(STORAGE_VOL);
-        const savedTime = localStorage.getItem(STORAGE_TIME);
-        let lastVol = 0.5; // default fallback
+// initialize state
+const savedVol = localStorage.getItem(STORAGE_VOL);
+let lastVol = 0.5; // default fallback
 
-        if (savedVol !== null) {
-            audio.volume = parseFloat(savedVol);
-            slider.value = savedVol;
-            if (audio.volume > 0) lastVol = audio.volume;
-        } else {
-            audio.volume = 0;
-            slider.value = 0;
-        }
-        updateIcon(audio.volume);
+if (savedVol !== null) {
+    audio.volume = parseFloat(savedVol);
+    slider.value = savedVol;
+    if (audio.volume > 0) lastVol = audio.volume;
+} else {
+    audio.volume = 0;
+    slider.value = 0;
+}
+updateIcon(audio.volume);
 
-        if (savedTime) {
-            audio.currentTime = parseFloat(savedTime);
-        }
+// MÜZİĞİ SIFIRLAMA: 
+// Bu satır her sayfa yüklendiğinde süreyi 0'a çeker.
+audio.currentTime = 0; 
 
-        // toggle mute logic
-        icon.addEventListener('click', () => {
-            if (audio.volume > 0) {
-                lastVol = audio.volume;
-                audio.volume = 0;
-                slider.value = 0;
-            } else {
-                audio.volume = lastVol;
-                slider.value = lastVol;
-                if (audio.paused) audio.play();
-            }
-            localStorage.setItem(STORAGE_VOL, audio.volume);
-            updateIcon(audio.volume);
-        });
+// toggle mute logic
+icon.addEventListener('click', () => {
+    if (audio.volume > 0) {
+        lastVol = audio.volume;
+        audio.volume = 0;
+        slider.value = 0;
+    } else {
+        audio.volume = lastVol;
+        slider.value = lastVol;
+        if (audio.paused) audio.play();
+    }
+    localStorage.setItem(STORAGE_VOL, audio.volume);
+    updateIcon(audio.volume);
+});
 
-        // event listeners
-        slider.addEventListener('input', (e) => {
-            const vol = parseFloat(e.target.value);
-            audio.volume = vol;
-            if (vol > 0) lastVol = vol;
-            localStorage.setItem(STORAGE_VOL, vol);
-            updateIcon(vol);
-            
-            if (vol > 0 && audio.paused) {
-                audio.play();
-            }
-        });
+// event listeners
+slider.addEventListener('input', (e) => {
+    const vol = parseFloat(e.target.value);
+    audio.volume = vol;
+    if (vol > 0) lastVol = vol;
+    localStorage.setItem(STORAGE_VOL, vol);
+    updateIcon(vol);
+    
+    if (vol > 0 && audio.paused) {
+        audio.play();
+    }
+});
 
         // save position periodically
         setInterval(() => {
@@ -1123,3 +1122,4 @@
 </body>
 
 </html>
+
